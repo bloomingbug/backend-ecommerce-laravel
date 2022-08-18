@@ -49,6 +49,14 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'api_customer' => [
+// <-- atur menjadi "api_customer"
+            'driver' => 'jwt',
+// <-- atur menjadi "jwt"
+            'provider' => 'customers',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -72,6 +80,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Customer::class,
         ],
 
         // 'users' => [

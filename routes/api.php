@@ -4,9 +4,12 @@ use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\CustomerController;
 use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\InvoiceController;
-use App\Http\Controllers\Api\Admin\LoginController;
+use App\Http\Controllers\Api\Admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\SliderController;
+use App\Http\Controllers\Api\Admin\UserController;
+use App\Http\Controllers\Api\Customer\LoginController as CustomerLoginController;
+use App\Http\Controllers\Api\Customer\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,18 +30,18 @@ use Illuminate\Support\Facades\Route;
 // group route with prefix "admin"
 Route::prefix('admin')->group(function () {
     // route login
-    Route::post('/login', [LoginController::class, 'index', ['as' => 'admin']]);
+    Route::post('/login', [AdminLoginController::class, 'index', ['as' => 'admin']]);
 
     // group route with middleware "auth:api_admin"
     Route::group(['middleware' => 'auth:api_admin'], function () {
         // data user
-        Route::get('/user', [LoginController::class, 'getUser', ['as' => 'admin']]);
+        Route::get('/user', [AdminLoginController::class, 'getUser', ['as' => 'admin']]);
 
         // refresh token JWT
-        Route::get('/refresh', [LoginController::class, 'refreshToken', ['as' => 'admin']]);
+        Route::get('/refresh', [AdminLoginController::class, 'refreshToken', ['as' => 'admin']]);
 
         // logout
-        Route::post('/logout', [LoginController::class, 'logout', ['as' => 'admin']]);
+        Route::post('/logout', [AdminLoginController::class, 'logout', ['as' => 'admin']]);
 
         // dashboard
         Route::get('/dashboard', [DashboardController::class, 'index', 'as' => 'admin']);
@@ -58,6 +61,29 @@ Route::prefix('admin')->group(function () {
         //sliders resource
         Route::apiResource('/sliders', SliderController::class, ['except' => ['create', 'show', 'edit', 'update'], 'as' => 'admin']);
 
+        //users resource
+        Route::apiResource('/users', UserController::class, ['except' => ['create', 'edit'], 'as' => 'admin']);
+
     });
 
+});
+
+Route::prefix('customer')->group(function () {
+    //route register
+    Route::post('/register', [RegisterController::class, 'store'], ['as' => 'customer']);
+
+    //route login
+    Route::post('/login', [CustomerLoginController::class, 'index'], ['as' => 'customer']);
+
+    // group route with middleware "auth:api_customer"
+    Route::group(['middleware' => 'auth:api_customer'], function () {
+        // data user
+        Route::get('/user', [CustomerLoginController::class, 'getUser'], ['as' => 'customer']);
+
+        // refresh token JWT
+        Route::get('/refresh', [CustomerLoginController::class, 'refreshToken'], ['as' => 'customer']);
+
+        // logout
+        Route::get('/logout', [CustomerLoginController::class, 'logout'], ['as' => 'customer']);
+    });
 });
