@@ -49,15 +49,15 @@ class CartController extends Controller
         if ($item->count()) {
 
             //increment / update quantity
-            $item->increment('qty');
+            $item->increment('quantity');
 
             $item = $item->first();
 
             //sum price * quantity
-            $price = $request->price * $item->qty;
+            $price = $request->price * $item->quantity;
 
             //sum weight
-            $weight = $request->weight * $item->qty;
+            $weight = $request->weight * $item->quantity;
 
             $item->update([
                 'price' => $price,
@@ -70,7 +70,7 @@ class CartController extends Controller
             $item = Cart::create([
                 'product_id' => $request->product_id,
                 'customer_id' => auth()->guard('api_customer')->user()->id,
-                'qty' => $request->qty,
+                'quantity' => $request->quantity,
                 'price' => $request->price,
                 'weight' => $request->weight,
             ]);
