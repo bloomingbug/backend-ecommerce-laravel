@@ -13,6 +13,9 @@ use App\Http\Controllers\Api\Customer\InvoiceController as CustomerInvoiceContro
 use App\Http\Controllers\Api\Customer\LoginController as CustomerLoginController;
 use App\Http\Controllers\Api\Customer\RegisterController;
 use App\Http\Controllers\Api\Customer\ReviewController;
+use App\Http\Controllers\Api\Web\CategoryController as WebCategoryController;
+use App\Http\Controllers\Api\Web\ProductController as WebProductController;
+use App\Http\Controllers\Api\Web\SliderController as WebSliderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -99,4 +102,18 @@ Route::prefix('customer')->group(function () {
         Route::post('/reviews', [ReviewController::class, 'store'], ['as' => 'customer']);
 
     });
+});
+
+//group route with prefix "web"
+Route::prefix('web')->group(function () {
+
+    //categories resource
+    Route::apiResource('/categories', WebCategoryController::class, ['except' => ['create', 'store', 'edit', 'update', 'destroy'], 'as' => 'web']);
+
+    //products resource
+    Route::apiResource('/products', WebProductController::class, ['except' => ['create', 'store', 'edit', 'update', 'destroy'], 'as' => 'web']);
+
+    //sliders route
+    Route::get('/sliders', [WebSliderController::class, 'index'], ['as' => 'web']);
+
 });

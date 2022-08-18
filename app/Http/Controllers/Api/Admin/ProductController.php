@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         //get products
-        $products = Product::with('categories')->when(request()->q, function ($products) {
+        $products = Product::with('category')->when(request()->q, function ($products) {
             $products = $products->where('title', 'like', '%' . request()->q . '%');
         })->latest()->paginate(5);
 
