@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Customer\InvoiceController as CustomerInvoiceContro
 use App\Http\Controllers\Api\Customer\LoginController as CustomerLoginController;
 use App\Http\Controllers\Api\Customer\RegisterController;
 use App\Http\Controllers\Api\Customer\ReviewController;
+use App\Http\Controllers\Api\Web\CartController;
 use App\Http\Controllers\Api\Web\CategoryController as WebCategoryController;
 use App\Http\Controllers\Api\Web\ProductController as WebProductController;
 use App\Http\Controllers\Api\Web\RajaOngkirController;
@@ -123,5 +124,20 @@ Route::prefix('web')->group(function () {
     Route::post('/rajaongkir/cities', [RajaOngkirController::class, 'getCities'], ['as' => 'web']);
 
     Route::post('/rajaongkir/checkOngkir', [RajaOngkirController::class, 'checkOngkir'], ['as' => 'web']);
+
+    //get cart
+    Route::get('/carts', [CartController::class, 'index'], ['as' => 'web']);
+
+    //store cart
+    Route::post('/carts', [CartController::class, 'store'], ['as' => 'web']);
+
+    //get cart price
+    Route::get('/carts/total_price', [CartController::class, 'getCartPrice'], ['as' => 'web']);
+
+    //get cart weight
+    Route::get('/carts/total_weight', [CartController::class, 'getCartWeight'], ['as' => 'web']);
+
+    //remove cart
+    Route::post('/carts/remove', [CartController::class, 'removeCart'], ['as' => 'web']);
 
 });
