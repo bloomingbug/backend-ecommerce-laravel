@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Customer\DashboardController as CustomerDashboardCo
 use App\Http\Controllers\Api\Customer\InvoiceController as CustomerInvoiceController;
 use App\Http\Controllers\Api\Customer\LoginController as CustomerLoginController;
 use App\Http\Controllers\Api\Customer\RegisterController;
+use App\Http\Controllers\Api\Customer\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -93,6 +94,9 @@ Route::prefix('customer')->group(function () {
 
         //invoices resource
         Route::apiResource('/invoices', CustomerInvoiceController::class, ['except' => ['create', 'store', 'edit', 'update', 'destroy'], 'as' => 'customer']);
+
+        //review
+        Route::post('/reviews', [ReviewController::class, 'store'], ['as' => 'customer']);
 
     });
 });
