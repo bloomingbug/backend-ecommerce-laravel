@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\CustomerController;
-use App\Http\Controllers\Api\Admin\DashboardController;
-use App\Http\Controllers\Api\Admin\InvoiceController;
+use App\Http\Controllers\Api\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Api\Admin\InvoiceController as AdminInvoiceController;
 use App\Http\Controllers\Api\Admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\SliderController;
 use App\Http\Controllers\Api\Admin\UserController;
+use App\Http\Controllers\Api\Customer\DashboardController as CustomerDashboardController;
+use App\Http\Controllers\Api\Customer\InvoiceController as CustomerInvoiceController;
 use App\Http\Controllers\Api\Customer\LoginController as CustomerLoginController;
 use App\Http\Controllers\Api\Customer\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -44,7 +46,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/logout', [AdminLoginController::class, 'logout', ['as' => 'admin']]);
 
         // dashboard
-        Route::get('/dashboard', [DashboardController::class, 'index', 'as' => 'admin']);
+        Route::get('/dashboard', [AdminDashboardController::class, 'index', 'as' => 'admin']);
 
         // categories resource
         Route::apiResource('/categories', CategoryController::class, ['except' => ['create', 'edit'], 'as' => 'admin']);
@@ -53,7 +55,7 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/products', ProductController::class, ['except' => ['create', 'edit'], 'as' => 'admin']);
 
         //invoices resource
-        Route::apiResource('/invoices', InvoiceController::class, ['except' => ['create', 'store', 'edit', 'update', 'destroy'], 'as' => 'admin']);
+        Route::apiResource('/invoices', AdminInvoiceController::class, ['except' => ['create', 'store', 'edit', 'update', 'destroy'], 'as' => 'admin']);
 
         //customer
         Route::get('/customers', [CustomerController::class, 'index', ['as' => 'admin']]);
@@ -85,5 +87,12 @@ Route::prefix('customer')->group(function () {
 
         // logout
         Route::get('/logout', [CustomerLoginController::class, 'logout'], ['as' => 'customer']);
+
+        // dashboard
+        Route::get('/dashboard', [CustomerDashboardController::class, 'index'], ['as' => 'customer']);
+
+        //invoices resource
+        Route::apiResource('/invoices', CustomerInvoiceController::class, ['except' => ['create', 'store', 'edit', 'update', 'destroy'], 'as' => 'customer']);
+
     });
 });
