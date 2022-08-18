@@ -1,24 +1,25 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Web\CartController;
+use App\Http\Controllers\Api\Admin\UserController;
+use App\Http\Controllers\Api\Admin\SliderController;
+use App\Http\Controllers\Api\Web\CheckoutController;
+use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\CustomerController;
-use App\Http\Controllers\Api\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Api\Admin\InvoiceController as AdminInvoiceController;
-use App\Http\Controllers\Api\Admin\LoginController as AdminLoginController;
-use App\Http\Controllers\Api\Admin\ProductController;
-use App\Http\Controllers\Api\Admin\SliderController;
-use App\Http\Controllers\Api\Admin\UserController;
-use App\Http\Controllers\Api\Customer\DashboardController as CustomerDashboardController;
-use App\Http\Controllers\Api\Customer\InvoiceController as CustomerInvoiceController;
-use App\Http\Controllers\Api\Customer\LoginController as CustomerLoginController;
-use App\Http\Controllers\Api\Customer\RegisterController;
-use App\Http\Controllers\Api\Customer\ReviewController;
-use App\Http\Controllers\Api\Web\CartController;
-use App\Http\Controllers\Api\Web\CategoryController as WebCategoryController;
-use App\Http\Controllers\Api\Web\ProductController as WebProductController;
 use App\Http\Controllers\Api\Web\RajaOngkirController;
+use App\Http\Controllers\Api\Customer\ReviewController;
+use App\Http\Controllers\Api\Customer\RegisterController;
 use App\Http\Controllers\Api\Web\SliderController as WebSliderController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Admin\LoginController as AdminLoginController;
+use App\Http\Controllers\Api\Web\ProductController as WebProductController;
+use App\Http\Controllers\Api\Web\CategoryController as WebCategoryController;
+use App\Http\Controllers\Api\Admin\InvoiceController as AdminInvoiceController;
+use App\Http\Controllers\Api\Customer\LoginController as CustomerLoginController;
+use App\Http\Controllers\Api\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Api\Customer\InvoiceController as CustomerInvoiceController;
+use App\Http\Controllers\Api\Customer\DashboardController as CustomerDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,5 +140,9 @@ Route::prefix('web')->group(function () {
 
     //remove cart
     Route::post('/carts/remove', [CartController::class, 'removeCart'], ['as' => 'web']);
+
+    //checkout route
+Route::post('/checkout', [CheckoutController::class, 'store'], ['as' => 'web']);
+
 
 });
