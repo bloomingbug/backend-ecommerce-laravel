@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\Customer\RegisterController;
 use App\Http\Controllers\Api\Customer\ReviewController;
 use App\Http\Controllers\Api\Web\CategoryController as WebCategoryController;
 use App\Http\Controllers\Api\Web\ProductController as WebProductController;
+use App\Http\Controllers\Api\Web\RajaOngkirController;
 use App\Http\Controllers\Api\Web\SliderController as WebSliderController;
 use Illuminate\Support\Facades\Route;
 
@@ -115,5 +116,12 @@ Route::prefix('web')->group(function () {
 
     //sliders route
     Route::get('/sliders', [WebSliderController::class, 'index'], ['as' => 'web']);
+
+    //rajaongkir
+    Route::get('/rajaongkir/provinces', [RajaOngkirController::class, 'getProvinces'], ['as' => 'web']);
+
+    Route::post('/rajaongkir/cities', [RajaOngkirController::class, 'getCities'], ['as' => 'web']);
+
+    Route::post('/rajaongkir/checkOngkir', [RajaOngkirController::class, 'checkOngkir'], ['as' => 'web']);
 
 });
