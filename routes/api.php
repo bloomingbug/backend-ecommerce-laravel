@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Admin\LoginController;
+use App\Http\Controllers\Api\Admin\CategoryController;
+use App\Http\Controllers\Api\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,12 @@ Route::prefix('admin')->group(function () {
 
         // logout
         Route::post('/logout', [LoginController::class, 'logout', ['as' => 'admin']]);
+
+        // dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index', 'as' => 'admin']);
+
+        // categories resource
+        Route::apiResource('/categories', CategoryController::class, ['except' => ['create', 'edit'], 'as' => 'admin']);
     });
 
 });
