@@ -17,7 +17,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::latest()->when(request()->q, function ($invoices) {
-            $invoices = $invoices->where('invoice', 'like', '%' . request()->q . '%');
+            $invoices = $invoices->where('invoice', 'ilike', '%' . request()->q . '%');
         })->where('customer_id', auth()->guard('api_customer')->user()->id)->paginate(5);
 
         //return with Api Resource

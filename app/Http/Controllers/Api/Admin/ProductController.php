@@ -21,7 +21,7 @@ class ProductController extends Controller
     {
         //get products
         $products = Product::with('category')->when(request()->q, function ($products) {
-            $products = $products->where('title', 'like', '%' . request()->q . '%');
+            $products = $products->where('title', 'ilike', '%' . request()->q . '%');
         })->latest()->paginate(5);
 
         //return with Api Resource

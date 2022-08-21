@@ -21,7 +21,7 @@ class CategoryController extends Controller
     {
         // get categories
         $categories = Category::when(request()->q, function ($categories) {
-            $categories = $categories->where('name', 'like', '%' . request()->q . '%');
+            $categories = $categories->where('name', 'ilike', '%' . request()->q . '%');
         })->latest()->paginate(5);
 
         // return with API Resource

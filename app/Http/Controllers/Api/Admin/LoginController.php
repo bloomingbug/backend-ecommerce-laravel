@@ -12,35 +12,37 @@ class LoginController extends Controller
     /**
      * index
      *
-     * @param mixed $request
+     * @param  mixed $request
      * @return void
      */
     public function index(Request $request)
     {
-        // set validasi
+        //set validasi
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // response error validasi
+        //response error validasi
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        // get "email" dan "password" dari input
+        //get "email" dan "password" dari input
         $credentials = $request->only('email', 'password');
 
-        // check jika "email" dan "password" tidak sesuai
+        //check jika "email" dan "password" tidak sesuai
         if (!$token = auth()->guard('api_admin')->attempt($credentials)) {
-            // response login "failed"
+
+            //response login "failed"
             return response()->json([
                 'success' => false,
                 'message' => 'Email or Password is incorrect',
             ], 401);
+
         }
 
-        // response login "success" dengan generate "Token"
+        //response login "success" dengan generate "Token"
         return response()->json([
             'success' => true,
             'user' => auth()->guard('api_admin')->user(),
@@ -55,31 +57,31 @@ class LoginController extends Controller
      */
     public function getUser()
     {
-        // response data "user" yang sedang login
+        //response data "user" yang sedang login
         return response()->json([
             'success' => true,
             'user' => auth()->guard('api_admin')->user(),
-        ]);
+        ], 200);
     }
 
     /**
      * refreshToken
      *
-     * @param mixed $request
+     * @param  mixed $request
      * @return void
      */
     public function refreshToken(Request $request)
     {
-        // refresh "token
+        //refresh "token"
         $refreshToken = JWTAuth::refresh(JWTAuth::getToken());
 
-        // set user dengan "token" baru
+        //set user dengan "token" baru
         $user = JWTAuth::setToken($refreshToken)->toUser();
 
-        // set header "Authorization" dengan type Bearer + "token" baru
+        //set header "Authorization" dengan type Bearer + "token" baru
         $request->headers->set('Authorization', 'Bearer ' . $refreshToken);
 
-        // response data 'user' dengan 'token' baru
+        //response data "user" dengan "token" baru
         return response()->json([
             'success' => true,
             'user' => $user,
@@ -94,10 +96,10 @@ class LoginController extends Controller
      */
     public function logout()
     {
-        // remove "token" JWT
+        //remove "token" JWT
         $removeToken = JWTAuth::invalidate(JWTAuth::getToken());
 
-        // response "success" logout
+        //response "success" logout
         return response()->json([
             'success' => true,
         ], 200);

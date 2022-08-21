@@ -18,7 +18,7 @@ class CustomerController extends Controller
     {
         $customers = Customer::when(request()->q, function ($customers) {
 
-            $customers = $customers->where('name', 'like', '%' . request()->q . '%');
+            $customers = $customers->where('name', 'ilike', '%' . request()->q . '%');
 
         })->latest()->paginate(5);
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\Web;
 
-use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -23,7 +23,7 @@ class ProductController extends Controller
             ->withCount('reviews')
         //search
             ->when(request()->q, function ($products) {
-                $products = $products->where('title', 'like', '%' . request()->q . '%');
+                $products = $products->where('title', 'ilike', '%' . request()->q . '%');
             })->latest()->paginate(8);
 
         //return with Api Resource

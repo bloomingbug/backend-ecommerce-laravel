@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         //get users
         $users = User::when(request()->q, function ($users) {
-            $users = $users->where('name', 'like', '%' . request()->q . '%');
+            $users = $users->where('name', 'ilike', '%' . request()->q . '%');
         })->latest()->paginate(5);
 
         //return with Api Resource

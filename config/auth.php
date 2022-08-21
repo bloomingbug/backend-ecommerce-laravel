@@ -39,21 +39,16 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-
         ],
 
-        'api_admin' => [
-// <-- atur menjadi "api_admin"
-            'driver' => 'jwt',
-// <-- atur menjadi "jwt"
+        'api_admin' => [ // <-- atur menjadi "api_admin"
+            'driver' => 'jwt', // <-- atur menjadi "jwt"
             'provider' => 'users',
             'hash' => false,
         ],
 
-        'api_customer' => [
-// <-- atur menjadi "api_customer"
-            'driver' => 'jwt',
-// <-- atur menjadi "jwt"
+        'api_customer' => [ // <-- atur menjadi "api_customer"
+            'driver' => 'jwt', // <-- atur menjadi "jwt"
             'provider' => 'customers',
             'hash' => false,
         ],
